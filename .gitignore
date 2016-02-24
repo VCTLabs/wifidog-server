@@ -1,0 +1,14 @@
+node_modules/
+# Object files
+*.o
+*.lib
+*.so
+*.lo
+*.la
+*.pyc
+
+# Temp files
+*.swp
+*.swo
+*~
+
