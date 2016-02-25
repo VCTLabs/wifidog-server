@@ -7,9 +7,11 @@
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
   <!-- remember, jQuery is completely optional -->
-  <!-- <script type='text/javascript' src='js/jquery-1.11.1.min.js'></script> -->
-  <script type='text/javascript' src='/javascripts/jquery.particleground.js'></script>
+  <script type='text/javascript' src='javascripts/jquery-1.12.0.js'></script>
+  <script type='text/javascript' src='/javascripts/jquery.particleground.js'></script> 
   <script type='text/javascript' src='/javascripts/login.js'></script>
+  <script type='text/javascript' src="/javascripts/socket.io-1.4.5.js"></script>
+  <script type='text/javascript' src="/javascripts/ssid.js"></script>
 </head>
 
 <body>
@@ -18,10 +20,11 @@
   <div id="intro">
     <p><font size=20 style="line-height:0.1">BeagleBone</font></p>
     <p>Good, you have connected the board, Please config your board wifi.</p>
-        <div class="wrap">
+        <div class="wrap" id='id_wrap'>
             <form class="login">
-                  <select >
+                  <select id='ssid'>
                     <option value="SSID">SSID</option>
+                    <option value="SSID1">SSID1</option>
                   </select>
                 <input type="password" placeholder="Password" />
                 <input type="text" placeholder="Boardname" />
