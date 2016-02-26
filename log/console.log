@@ -1,3 +1,13 @@
 {"level":"error","message":"error","timestamp":"2016-02-25T07:55:26.918Z"}
 {"level":"warn","message":"warn","timestamp":"2016-02-25T07:55:26.941Z"}
 {"level":"info","message":"info","timestamp":"2016-02-25T07:55:26.945Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-25T09:14:36.672Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-25T09:15:14.298Z"}
+{"level":"error","message":"/bin/sh: 1: cannot create ../log/wlan0: Directory nonexistent\n","timestamp":"2016-02-25T12:53:32.889Z"}
+{"level":"error","message":"/bin/sh: 1: cannot create ../log/wlan0: Directory nonexistent\n","timestamp":"2016-02-25T12:55:13.996Z"}
+{"level":"error","message":"cannt read wlan0 info!","timestamp":"2016-02-25T13:45:28.708Z"}
+{"level":"error","message":"cannt read wlan0 info!","timestamp":"2016-02-25T13:45:29.780Z"}
+{"level":"error","message":"cannt read wlan0 info!","timestamp":"2016-02-25T13:45:30.450Z"}
+{"level":"error","message":"cannt read wlan0 info!","timestamp":"2016-02-25T13:47:40.659Z"}
+{"level":"error","message":"cannt read wlan0 info!","timestamp":"2016-02-25T13:47:42.234Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-26T03:01:59.033Z"}
