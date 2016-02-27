@@ -132,7 +132,6 @@ form.login select
     margin-bottom: 5px;
     color: #FFFFFF;
     outline: 0;
-      appearance:none;
   -moz-appearance:none;
   -webkit-appearance:none;
 }
@@ -158,10 +157,14 @@ p {
 }
 .btn {
   color: #fff;
+  font-weight:800;
+  text-decoration:underline;
 }
 .btn:hover {
   color: #005544;
+  font-weight:800;
   border-color: #005544;
+  text-decoration:underline;
 }
 @media only screen and (max-width: 1000px) {
   h1 {

@@ -5,8 +5,8 @@
  */
 
 document.addEventListener('DOMContentLoaded', function () {
- // particleground(document.getElementById('particles'), {
-     $('#particles').particleground({
+  particleground(document.getElementById('particles'), {
+    // $('#particles').particleground({
     //dotColor: '#5cbdaa',
     dotColor: '#7CFC00',
     lineColor: '#5cbdaa',

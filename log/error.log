@@ -9,3 +9,14 @@
 {"level":"error","message":"cannt read wlan0 info!","timestamp":"2016-02-25T13:47:40.640Z"}
 {"level":"error","message":"cannt read wlan0 info!","timestamp":"2016-02-25T13:47:42.226Z"}
 {"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-26T03:01:59.004Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-26T07:08:01.903Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-26T07:20:05.736Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-26T07:20:12.307Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-26T07:32:36.559Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-26T08:13:51.761Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-26T11:05:29.139Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-27T01:13:41.833Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-27T01:13:45.977Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-27T01:14:02.986Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-27T01:15:37.918Z"}
+{"level":"error","message":"command failed: Device or resource busy (-16)\n","timestamp":"2016-02-27T01:15:49.158Z"}
