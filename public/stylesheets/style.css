@@ -99,7 +99,21 @@ form
     margin: 0 auto;
 }
 
-form.login input[type="text"], form.login input[type="password"]
+form.login input[type="text"]
+{
+    width: 100%;
+    margin: 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #FFFFFF;
+    outline: 0;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    outline: 0;
+    -webkit-user-select: text;
+}
+form.login input[type="password"]
 {
     width: 100%;
     margin: 0;

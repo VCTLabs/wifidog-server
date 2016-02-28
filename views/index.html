@@ -22,12 +22,11 @@
     <p>Good, you have connected the board, Please config your board wifi.</p>
         <div class="wrap" id='id_wrap'>
             <form class="login"  action="config?act=config" name="wifi_info" method="post">
-                  <select id='ssid' name="ssid" onclick='select_click()'>
-                  </select>
+                <select id='ssid' name="ssid" onclick='select_click()'>
+                <option value="note">click to select ssid</option>
+                </select>
                 <input type="password" name="password" placeholder="Password" />
-                <input type="text" name="boardname" placeholder="Boardname" />
-                <!--<a class="btn" onclick="btn_check(this.form)"><u>OK</u></a> -->
-                <input type=submit  class='btn' size="15"  style="background-color: transparent; border: 0;" name="submit" value="OK" onclick="btn_check(this.form)">
+                <input type='submit'  class='btn' size="15"  style="background-color: transparent; border: 0;" name="submit" value="OK" onclick="btn_check(this.form)"/>
             </form>
         </div>
   </div>

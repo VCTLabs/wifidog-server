@@ -32,7 +32,7 @@ function init(){
         {
             var obj = JSON.parse(message); 
             //alert(message);
-            selector.options.length = 0; 
+            selector.options.length = 1; 
             for (var i = 0; i < obj.length; i++) {
                 var option = document.createElement('option');
                 option.text = obj[i].ssid + '   ' + obj[i].signal;
@@ -43,10 +43,10 @@ function init(){
     });
 }
 function  select_click(){
-    iosocket.emit('rescan_wlan0_info','a');
+    //iosocket.emit('rescan_wlan0_info','a');
 }
 function btn_check(form){
-    if(form.ssid.value == '')
+    if(form.ssid.value == 'note')
     {
         alert("Sorry,I didnt find any ssid.");
         return false;
@@ -55,11 +55,6 @@ function btn_check(form){
     if(form.password.value == '')
     {
         alert("Please,Enter the ssid password.");
-        return false;
-    }
-    if(form.boardname.value == '')
-    {
-        alert("Please,Name the board.");
         return false;
     }
     return true;
