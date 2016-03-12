@@ -19,18 +19,31 @@ router.get('/login', function(req, res, next) {
     gw_port     = req.query.gw_port;
   res.render('index', { title: 'WIFI authentication' });
 });
-
+/*for web browser test*/
+router.post('/config',function(req,res){
+    console.log(req.body.ssid);
+    console.log(req.body.password);
+    res.render('starter', { title: 'Simple getting starter' });
+});
+/*wifidog post ssid and password*/
 router.post('/login/config',function(req,res){
     var token = '';
     console.log("Form (form querystring):" + req.query.form);
-    //var wlan0_info = JSON.parse(ssid_list);
     console.log(req.body.ssid);
     console.log(req.body.password);
-    var crypt = require('crypto');
-    token = crypt.randomBytes( 64 ).toString('hex');
-    //res.render('starter', { title: 'Simple getting starter' });  
+
+    res.render('starter', { title: 'Simple getting starter' });  
     //console.log('http://' + gw_address + ':' + gw_port + '/wifidog/auth?token=' + token );
-    res.redirect( 'http://' + gw_address + ':' + gw_port + '/wifidog/auth?token=' + token );
+    //res.redirect( 'http://' + gw_address + ':' + gw_port + '/wifidog/auth?token=' + token );
+});
+/*for web browser test*/
+router.post('/last',function(req,res){
+     console.log('last.......');
+     res.render('BB_logo', { title: 'Show logo' }); 
+});
+/*wifidog tell you are ready.*/
+router.post('/login/last',function(req,res){
+    res.render('BB_logo', { title: 'Show logo' }); 
 });
 router.get('/auth', function(req, res, next) {
     

@@ -28,17 +28,13 @@ function init(){
   /***/  
     var selector = document.getElementById('ssid');
     iosocket.on('wlan0_info', function(message) {
-        if(message.length > 0)
-        {
-            var obj = JSON.parse(message); 
-            //alert(message);
-            selector.options.length = 1; 
-            for (var i = 0; i < obj.length; i++) {
-                var option = document.createElement('option');
-                option.text = obj[i].ssid + '   ' + obj[i].signal;
-                option.value = obj[i].ssid;
-                selector.appendChild(option);
-            }                
+        selector.options.length = 1; 
+        for(var serviceName in message) {
+            var option = document.createElement('option');
+            option.text = message[serviceName].Name + '   ' + message[serviceName].Strength;
+            option.value = message[serviceName].Name;
+            selector.appendChild(option);
+            //alert(message[serviceName].Name);
         }
     });
 }
@@ -50,8 +46,7 @@ function btn_check(form){
     {
         alert("Sorry,I didnt find any ssid.");
         return false;
-    }else
-        form.ssid.value = form.ssid.text;
+    }
     if(form.password.value == '')
     {
         alert("Please,Enter the ssid password.");
