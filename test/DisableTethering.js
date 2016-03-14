@@ -5,7 +5,7 @@ process.env.DBUS_SESSION_BUS_ADDRESS = 'unix:path=/run/dbus/system_bus_socket';
 
 var ConnMan = require('connman-api');
 
-var connman = new ConnMan();
+var connman = new ConnMan(true);
 
 connman.init(function() {
 
