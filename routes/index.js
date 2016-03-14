@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var connman = require(__dirname + '/../lib/connman_dev');
 var wifidog = require(__dirname + '/../lib/wifidog_dev');
+var led = require(__dirname + '/../lib/led');
 var gw_address = '';
 var gw_port = '';
 var ssid;
@@ -21,6 +22,7 @@ router.get('/ping', function(req, res, next) {
 router.get('/login', function(req, res, next) {
     gw_address = req.query.gw_address;
     gw_port     = req.query.gw_port;
+    led.on("config");
   res.render('index', { title: 'WIFI authentication' });
 });
 /*for web browser test*/
@@ -38,6 +40,7 @@ router.post('/login/config',function(req,res){
     password = req.body.password;
     console.log(ssid);
     console.log(password);
+    
     res.render('starter', { title: 'Simple getting starter' });  
     //console.log('http://' + gw_address + ':' + gw_port + '/wifidog/auth?token=' + token );
     //res.redirect( 'http://' + gw_address + ':' + gw_port + '/wifidog/auth?token=' + token );
@@ -49,8 +52,10 @@ router.post('/last',function(req,res){
 });
 /*wifidog tell you are ready.*/
 router.post('/login/last',function(req,res){
-    res.render('BB_logo', { title: 'Show logo' }); 
     wifidog.on('off');
+    led.on("ok");
+
+    res.render('BB_logo', { title: 'Show logo' }); 
     connman.on('sta',function(err){
         console.log(err);
     },ssid,password);

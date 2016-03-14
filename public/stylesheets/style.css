@@ -83,6 +83,15 @@ body {
   width: 100%;
   text-align: center;
 }
+
+#intro_img {
+  position: absolute;
+  left: 0;
+  top: 20%;
+  padding: 0 20px;
+  width: 100%;
+  text-align: center;
+}
 .wrap
 {
     width: 100%;
