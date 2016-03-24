@@ -23,7 +23,12 @@ router.get('/login', function(req, res, next) {
     gw_address = req.query.gw_address;
     gw_port     = req.query.gw_port;
     led.on("config");
-  res.render('index', { title: 'WIFI authentication' });
+    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+    res.header("Pragma", "no-cache");
+    res.header("Expires", 0);
+
+    console.log(req.query);
+    res.render('index', { title: 'WIFI authentication' });
 });
 /*for web browser test*/
 router.post('/config',function(req,res){
@@ -63,4 +68,5 @@ router.post('/login/last',function(req,res){
 router.get('/auth', function(req, res, next) {
     
 });
+
 module.exports = router;
