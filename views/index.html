@@ -12,28 +12,26 @@
   <script type='text/javascript' src='/javascripts/login.js'></script>
   <script type='text/javascript' src="/javascripts/socket.io-1.4.5.js"></script>
   <script type='text/javascript' src="/javascripts/ssid.js"></script>
-  <script type='text/javascript' src="/javascripts/spin.min.js"></script>
 </head>
 
 <body>
 
 <div id="particles">
   <div id="intro">
-    <p><font size=20 style="line-height:0.1">BeagleBone</font></p>
-    <p>Welcome, your board is connected. Please configure the board's Wi-Fi.</p>
-    <p hidden="hidden">SSID:<br>
-                         IP:<br></p>
-    <form  action="config?act=config" name="done" method="post">
-        <input hidden="hidden" type='submit'  class='btn' size="15"  style="background-color: transparent; border: 0;" name="submit" value="Done" onclick="btn_done(this.form)"/>
-    </form>
+    <h1><font size=20 style="line-height:0.1">BeagleBone</font></h1>
+    <p>Welcome, your board is connected. Please configure the board's Wi-Fi.</p>    
         <div class="wrap" id='id_wrap'>
-            <img hidden="hidden" src=/image/wait.gif alt="wait" id = "wait" />
-            <form class="login"  action="config?act=config" name="wifi_info" method="post">
+            <p style="display: none;" id="lanInfo"></p>
+            <form  style="display: none;" action="config?act=config" name="done" method="post">
+                <input type='submit'  class='btn' size="15"  style="background-color: transparent; border: 0;" name="submit" value="Done"/>
+            </form>
+            <img style="display: none;" src=/image/wait.gif alt="wait" id = "wait" />
+            <form class="login"  action="config?act=config" onsubmit="return check()"  name="wifi_info" method="post">
                 <select id='ssid' name="ssid" onclick='select_click()'>
                 <option value="note">click to select ssid</option>
                 </select>
                 <input type="password" name="password" placeholder="Password" />
-                <input type='submit'  class='btn' size="15"  style="background-color: transparent; border: 0;" name="submit" value="OK" onclick="btn_check(this.form)"/>
+                <input type='submit'  class='btn' size="15"  style="background-color: transparent; border: 0;" name="submit" value="OK"/>
             </form>
         </div>
   </div>

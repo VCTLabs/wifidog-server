@@ -59,9 +59,11 @@ router.post('/login/last',function(req,res){
     led.on("ok");
 
     res.render('BB_logo', { title: 'Show logo' }); 
-    connman.on('sta',function(err){
-        console.log(err);
-    },ssid,password);
+    if(ssid !=null && password != null){
+        connman.on('sta',ssid,password,function(err){
+            console.log(err);
+        });
+    }
 });
 router.get('/auth', function(req, res, next) {
     
