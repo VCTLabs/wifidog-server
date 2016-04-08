@@ -12,7 +12,7 @@ connman.init(function() {
 
 	connman.getServices(function(err, services) {
 		for(var serviceName in services){
-            console.log(services[serviceName].Type);
+            console.log(services[serviceName].Name);
             if(services[serviceName].Type == 'wifi')
             {
                  console.log(services[serviceName].IPv4.Address);

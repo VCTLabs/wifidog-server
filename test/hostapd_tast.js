@@ -1,21 +1,13 @@
-// Log files
-var config = {}
-config.logger = {};
-config.logger.errorFile = __dirname + '/log/error.log';
-config.logger.consoleFile = __dirname + '/log/console.log';
-config.logger.maxFileSize = 1000000;
-config.logger.maxFiles = 1;
-config.button = {};
-config.button.isUsed = 0;
-config.button.num = 43;
-config.hostapd ={
+var hostapd = require(__dirname + '/../lib/hostapd');
+var child_process = require('child_process');
+var options = {
      driver: 'nl80211',
      ssid: 'BeagleBone',
      country_code: 'US',
      interface: 'SoftAp0',
      hw_mode: 'g',
-     //wpa: 1
-     //wpa_passphrase:  "beaglebone" , 
+  //   wpa: 2
+  //   wpa_passphrase: BeagleBone  
      logger_syslog: -1,
      logger_syslog_level: 2,
      logger_stdout: -1,
@@ -93,5 +85,19 @@ config.hostapd ={
      device_type: '0-00000000-0',
      config_methods: 'virtual_display virtual_push_button keypad'
 };
-// Make the configuration parameters available.
-module.exports = config;
+// hostapd.enable(options,function(err){
+    // console.log("hostname:"+err);
+// });
+// hostapd.disable(options.interface ,function(err){
+    // console.log("hostname:"+err);
+// });
+var last = child_process.exec('pgrep -f "hostapd -B SoftAp0-hostapd.conf"',function(err) {
+    console.log(err); 
+});
+last.stdout.on('data', function (data) {
+    console.log(last.pid);
+    console.log("hostapd start"+data);
+    if(data != last.pid){
+        console.log("hostapd start");
+    }
+});

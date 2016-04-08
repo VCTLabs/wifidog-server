@@ -1,55 +1,53 @@
 var ConnMan = require('connman-api');
 var async = require('async');
-var targetNetwork = 'stu.se.private';
-
+var targetNetwork = 'Xiaomi_9AC8';
+var EventEmitter = require('events').EventEmitter; 
 var connman = new ConnMan(true);
 var wifi; 
 var serviceData;
 var service;
-
-async.series([
-    function(next) {
-        connman.init(next);
-    },
-    function(next) {
-        // get wifi technology object
-        wifi = connman.technologies.WiFi; 
-        console.log("perform a scan, just to make sure we have the latest");
-        wifi.scan(next); 
-    },
-    function(next) {
-        // get available networks
-        console.log("find target network");
+var event = new EventEmitter(); 
+connman.init(function() {
+    wifi = connman.technologies.WiFi; 
+     event.on('scan', function() { 
+        wifi.scan(function(){
+           event.emit('list'); 
+        }); 
+        console.log('scan ....'); 
+    });  
+    event.on('list', function() { 
         wifi.getServices(function(err, services) {
-            if(err) return next(err);
+            if(err) return console.log(err);
             for(var serviceName in services) {
                 if(services[serviceName].Name == targetNetwork) {
                     serviceData = services[serviceName];
                     console.log("found network '"+targetNetwork+"'");
-                    next();
+                    event.emit('getWifiObject');
                     break;
                 }
             }
             if (!serviceData) {
-                return next(new Error("Network '"+targetNetwork+"' not found"));
+                event.emit('scan'); 
             }
         });
-    },
-    function(next) {
-        // get wifi service object
-        console.log(serviceData.serviceName);
+    }); 
+    event.on('getWifiObject', function() {
         connman.getService(serviceData.serviceName, function(err, ser) {
-            service = ser;
-            next(err);
-        });
-    },
-    function(next) {
-        // Connect to that service
-        console.log('Connecting ...');
+            if(err) { 
+                event.emit('scan'); 
+                console.log(err);
+                }
+                
+            service = ser;   
+            console.log(service.name);
+            event.emit('Connecting');
+        });        
+    });  
+    event.on('Connecting', function() {
         service.connect(function(err, agent) {
             if (err){
+                event.emit('scan'); 
                 console.log(err);
-                return next(err); 
             }
             var failed = false;
             console.log(connman.enableAgent);
@@ -72,7 +70,8 @@ async.series([
                   console.log(dict);
 
                   if ('Passphrase' in dict) {
-                      callback({ 'Passphrase': 'depot0510se' });
+                      callback({ 'Passphrase': 'qqqqqqqq9' });
+                      event.emit('PropertyChanged');
                       return;
                   }
 
@@ -81,18 +80,19 @@ async.series([
               agent.on('Cancel', function() {
                   console.log('Cancel');
               });
+              event.emit('PropertyChanged');
             }
-            next();
-        });
-    },
-    function(next) {
+        });        
+    });   
+    event.on('PropertyChanged', function() {
+        console.log("PropertyChanged");
         // listen for service property changes
         service.on('PropertyChanged', function(name, value) {
             console.log(name + '=' + value);
             if (name == 'State') {
                 switch(value) {
                 case 'failure':
-                    next(new Error('Connection failed'));
+                    event.emit('scan');
                     break;
                 case 'association':
                     console.log('Associating ...');
@@ -103,13 +103,18 @@ async.series([
                 case 'online':
                 case 'ready':
                     console.log('Connected');
-                    next();
+                    event.emit('disconnect');
                     break;
                 }
             }
-        });
-    },
-],function(err) {
-    console.log("connect sequence finished ",err || '');
-    process.exit();
+        });        
+    });   
+    event.on('disconnect', function() {
+        service.disconnect(function() {
+            console.log('disconnected');
+            event.emit('scan');
+        });       
+    });   
+    event.emit('scan');     
 });
+

@@ -1,7 +1,7 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'node', '/usr/local/bin/npm', 'start' ]
 2 info using npm@3.8.0
-3 info using node@v0.12.11
+3 info using node@v0.12.12
 4 verbose node symlink /usr/bin/node
 5 verbose run-script [ 'prestart', 'start', 'poststart' ]
 6 info lifecycle wifidog-server@0.0.0~prestart: wifidog-server@0.0.0
@@ -23,9 +23,9 @@
 15 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1091:5)
 16 verbose pkgid wifidog-server@0.0.0
 17 verbose cwd /root/wifidog-server
-18 error Linux 4.1.18-ti-rt-r52
+18 error Linux 4.1.18-ti-r53
 19 error argv "node" "/usr/local/bin/npm" "start"
-20 error node v0.12.11
+20 error node v0.12.12
 21 error npm  v3.8.0
 22 error code ELIFECYCLE
 23 error wifidog-server@0.0.0 start: `node ./bin/www`
