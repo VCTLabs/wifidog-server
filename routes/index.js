@@ -41,48 +41,48 @@ router.post('/config',function(req,res){
 /*wifidog post ssid and password*/
 router.post('/login/config',function(req,res,next){
 //    console.log("Form (form querystring):" + req.query.form);
-    console.log(req.body);
-    ssid = req.body.ssid;
-    password = req.body.password;
-    console.log(ssid);
-    console.log(password);
-    errorCode = 4;
-    event.on("send",function(){
-        if(errorCode == 1)
-        {return res.send("ready"); }
-        else if(errorCode == 2)
-        {return res.send("failure");}
-        else if(errorCode == 3)
-         {return res.send("failure");}
+    // console.log(req.body);
+    // ssid = req.body.ssid;
+    // password = req.body.password;
+    // console.log(ssid);
+    // console.log(password);
+    // errorCode = 4;
+    // event.on("send",function(){
+        // if(errorCode == 1)
+        // {return res.send("ready"); }
+        // else if(errorCode == 2)
+        // {return res.send("failure");}
+        // else if(errorCode == 3)
+         // {return res.send("failure");}
           
-    });
-    if(ssid !=null && password != null){
-        connman.on('sta',ssid,password,function(status){ 
-            console.log(status+errorCode);
-            if(errorCode == 4){
-                if(status == "ready")
-                {
-                    errorCode = 1;
-                    event.emit("send");
-                }
-                if(status == "failure")
-                {
-                    errorCode = 2;
-                    event.emit("send");                    
-                }
-            }       
-        });
-    }else{
-        if(errorCode == 4){
-            errorCode = 3;
-            event.emit("send");
-        }
-    }    
+    // });
+    // if(ssid !=null && password != null){
+        // connman.on('sta',ssid,password,function(status){ 
+            // console.log(status+errorCode);
+            // if(errorCode == 4){
+                // if(status == "ready")
+                // {
+                    // errorCode = 1;
+                    // event.emit("send");
+                // }
+                // if(status == "failure")
+                // {
+                    // errorCode = 2;
+                    // event.emit("send");                    
+                // }
+            // }       
+        // });
+    // }else{
+        // if(errorCode == 4){
+            // errorCode = 3;
+            // event.emit("send");
+        // }
+    // }    
 
 });
 /*wifidog post ssid and password*/
 router.post('/login/done',function(req,res){
-    res.render('starter', { title: 'Simple getting starter' });
+     res.redirect( 'http://192.168.8.1/bone101/Support/bone101/' );
 });
 /*for web browser test*/
 router.post('/last',function(req,res){
