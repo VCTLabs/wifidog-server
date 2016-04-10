@@ -1,7 +1,7 @@
 #Webconfig
 ##wifidog Protocol
 
-![](https://github.com/Pillar1989/wifidog-server/blob/BBGW/public/image/wifidog-Protocol.png）
+![](https://github.com/Pillar1989/wifidog-server/blob/BBGW/public/image/wifidog-Protocol.png)
 
 * The client does his initial request, as if he was already connected, (e.g.: http://www.google.ca)
 * The Gateway's firewall rules mangle the request to redirect it to a local port on the Gateway. When that's the done, the Gateway provides an HTTP Redirect reply that contains the Gateway ID, Gateway FQDN and other informations
