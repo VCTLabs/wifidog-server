@@ -22,17 +22,18 @@
     <p>Welcome, your board is connected. Please configure the board's Wi-Fi.</p>    
         <div class="wrap" id='id_wrap'>
             <p style="display: none;" id="lanInfo"></p>
-            <form  style="display: none;" action="config?act=config" name="done" method="post">
+            <form  style="display: none;" action="done?act=done" name="done" method="post">
                 <input type='submit'  class='btn' size="15"  style="background-color: transparent; border: 0;" name="submit" value="Done"/>
             </form>
             <img style="display: none;" src=/image/wait.gif alt="wait" id = "wait" />
-            <form class="login"  action="config?act=config" onsubmit="return check()"  name="wifi_info" method="post">
+            <div class="login">
+            <form class="login" style="display: ;" action="config?act=config"  name="wifi_info" method="post">
                 <select id='ssid' name="ssid" onclick='select_click()'>
                 <option value="note">click to select ssid</option>
                 </select>
                 <input type="password" name="password" placeholder="Password" />
-                <input type='submit'  class='btn' size="15"  style="background-color: transparent; border: 0;" name="submit" value="OK"/>
-            </form>
+                <input type="button"  class='btn' size="15"  style="background-color: transparent; border: 0;" onclick="check()" value="OK"/>
+           </form> 
         </div>
   </div>
 </div>

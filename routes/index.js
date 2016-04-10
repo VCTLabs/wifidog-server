@@ -3,10 +3,13 @@ var router = express.Router();
 var connman = require(__dirname + '/../lib/connman');
 var wifidog = require(__dirname + '/../lib/wifidog');
 var led = require(__dirname + '/../lib/led');
+var EventEmitter = require('events').EventEmitter; 
 var gw_address = '';
 var gw_port = '';
 var ssid;
 var password;
+var event = new EventEmitter(); 
+var errorCode;
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.send('hello world');
@@ -25,28 +28,61 @@ router.get('/login', function(req, res, next) {
     res.header("Pragma", "no-cache");
     res.header("Expires", 0);
 
-    console.log(req.query);
+    //console.log(req.query);
     res.render('index', { title: 'WIFI authentication' });
 });
 /*for web browser test*/
 router.post('/config',function(req,res){
 
-    console.log(ssid);
-    console.log(password);
-    res.render('starter', { title: 'Simple getting starter' });
+    console.log(req.body);
+    res.send("hello word");
+   // res.render('starter', { title: 'Simple getting starter' });
 });
 /*wifidog post ssid and password*/
-router.post('/login/config',function(req,res){
-    var token = '';
-    console.log("Form (form querystring):" + req.query.form);
+router.post('/login/config',function(req,res,next){
+//    console.log("Form (form querystring):" + req.query.form);
+    console.log(req.body);
     ssid = req.body.ssid;
     password = req.body.password;
     console.log(ssid);
     console.log(password);
-    
-    res.render('starter', { title: 'Simple getting starter' });  
-    //console.log('http://' + gw_address + ':' + gw_port + '/wifidog/auth?token=' + token );
-    //res.redirect( 'http://' + gw_address + ':' + gw_port + '/wifidog/auth?token=' + token );
+    errorCode = 4;
+    event.on("send",function(){
+        if(errorCode == 1)
+        {return res.send("ready"); }
+        else if(errorCode == 2)
+        {return res.send("failure");}
+        else if(errorCode == 3)
+         {return res.send("failure");}
+          
+    });
+    if(ssid !=null && password != null){
+        connman.on('sta',ssid,password,function(status){ 
+            console.log(status+errorCode);
+            if(errorCode == 4){
+                if(status == "ready")
+                {
+                    errorCode = 1;
+                    event.emit("send");
+                }
+                if(status == "failure")
+                {
+                    errorCode = 2;
+                    event.emit("send");                    
+                }
+            }       
+        });
+    }else{
+        if(errorCode == 4){
+            errorCode = 3;
+            event.emit("send");
+        }
+    }    
+
+});
+/*wifidog post ssid and password*/
+router.post('/login/done',function(req,res){
+    res.render('starter', { title: 'Simple getting starter' });
 });
 /*for web browser test*/
 router.post('/last',function(req,res){
@@ -59,11 +95,6 @@ router.post('/login/last',function(req,res){
     led.on("ok");
 
     res.render('BB_logo', { title: 'Show logo' }); 
-    if(ssid !=null && password != null){
-        connman.on('sta',ssid,password,function(err){
-            console.log(err);
-        });
-    }
 });
 router.get('/auth', function(req, res, next) {
     
