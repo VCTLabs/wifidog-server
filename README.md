@@ -133,6 +133,8 @@ Config it:
 * The Auth Server confirms the token
 * The Gateway then sends a redirect to the Client to obtain the Success Page from the Auth Server, redirects to http://auth_server/portal/
 * The Auth Server notifies the Client that his request was successful
+
+
 ###wifidog server
 >git clone https://github.com/Pillar1989/wifidog-server -B BBGW
 >cd wifidog-server
