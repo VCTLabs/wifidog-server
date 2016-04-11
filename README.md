@@ -137,8 +137,11 @@ Config it:
 
 ###wifidog server
 >git clone https://github.com/Pillar1989/wifidog-server -B BBGW
+
 >cd wifidog-server
+
 >npm install
+
 >npm start
 
 Enjoy it.
