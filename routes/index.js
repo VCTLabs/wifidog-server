@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var connman = require(__dirname + '/../lib/connman');
 var wifidog = require(__dirname + '/../lib/wifidog');
+var logger = require(__dirname + '/../lib/logger');
 var led = require(__dirname + '/../lib/led');
 var EventEmitter = require('events').EventEmitter; 
 var gw_address = '';
@@ -28,24 +29,24 @@ router.get('/login', function(req, res, next) {
     res.header("Pragma", "no-cache");
     res.header("Expires", 0);
 
-    //console.log(req.query);
+    // logger.info(req.query);
     res.render('index', { title: 'WIFI authentication' });
 });
 /*for web browser test*/
 router.post('/config',function(req,res){
 
-    console.log(req.body);
+     logger.info(req.body);
     res.send("hello word");
    // res.render('starter', { title: 'Simple getting starter' });
 });
 /*wifidog post ssid and password*/
 router.post('/login/config',function(req,res,next){
-//    console.log("Form (form querystring):" + req.query.form);
-    // console.log(req.body);
+//     logger.info("Form (form querystring):" + req.query.form);
+    //  logger.info(req.body);
     // ssid = req.body.ssid;
     // password = req.body.password;
-    // console.log(ssid);
-    // console.log(password);
+    //  logger.info(ssid);
+    //  logger.info(password);
     // errorCode = 4;
     // event.on("send",function(){
         // if(errorCode == 1)
@@ -58,7 +59,7 @@ router.post('/login/config',function(req,res,next){
     // });
     // if(ssid !=null && password != null){
         // connman.on('sta',ssid,password,function(status){ 
-            // console.log(status+errorCode);
+            //  logger.info(status+errorCode);
             // if(errorCode == 4){
                 // if(status == "ready")
                 // {
@@ -86,7 +87,7 @@ router.post('/login/done',function(req,res){
 });
 /*for web browser test*/
 router.post('/last',function(req,res){
-     console.log('last.......');
+      logger.info('last.......');
      res.render('BB_logo', { title: 'Show logo' }); 
 });
 /*wifidog tell you are ready.*/
