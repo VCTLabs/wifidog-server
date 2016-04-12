@@ -6,7 +6,7 @@ node_modules/
 *.lo
 *.la
 *.pyc
-
+log/*
 # Temp files
 *.swp
 *.swo
