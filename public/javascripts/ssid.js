@@ -1,7 +1,8 @@
 window.onload = init;
-var iosocket = io();  
+var iosocket;  
 function init(){ 
   /***/  
+    iosocket= io();  
     var selector = document.getElementById('ssid');
     var lanInfo = document.getElementById('lanInfo');
     var waitimg = document.getElementById('wait');
