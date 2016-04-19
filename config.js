@@ -14,8 +14,11 @@ config.hostapd ={
      country_code: 'US',
      interface: 'SoftAp0',
      hw_mode: 'g',
-     //wpa: 1
+     //wpa: 2,
      //wpa_passphrase:  "beaglebone" , 
+     //wpa_key_mgmt:  "WPA-PSK" , 
+     //wpa_pairwise:  "CCMP TKIP" , 
+     //rsn_pairwise:  "CCMP TKIP" , 
      logger_syslog: -1,
      logger_syslog_level: 2,
      logger_stdout: -1,
