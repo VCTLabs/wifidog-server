@@ -97,6 +97,7 @@ https://github.com/Pillar1989/wifidog-server/blob/BBGW/config.js
 
 Connman should allow hostapd play SoftAp0. 
 >cat /etc/connman/main.conf
+
 	[General]
 	PreferredTechnologies=ethernet,wifi
 	SingleConnectedTechnology=false
