@@ -12,9 +12,7 @@ var ping = require(__dirname + '/routes/ping');
 var app = express();
 var b = require('bonescript');
 
-var directory = (process.env.AUTORUN_DIR) ? process.env.AUTORUN_DIR : '/var/lib/cloud9/autorun';
-
-b.autorun(directory);
+b.serverStart();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.html', ejs.__express);
