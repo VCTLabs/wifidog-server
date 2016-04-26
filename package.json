@@ -1,5 +1,5 @@
 {
-  "name": "webconfig",
+  "name": "wificonfig",
   "version": "0.0.1",
   "scripts": {
     "start": "nodejs ./bin/www"
