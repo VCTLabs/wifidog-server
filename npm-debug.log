@@ -1,0 +1,256 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@3.8.0
+3 info using node@v0.12.12
+4 verbose node symlink /usr/bin/node
+5 verbose publish [ '.' ]
+6 silly cache add args [ '.', null ]
+7 verbose cache add spec .
+8 silly cache add parsed spec { raw: '.',
+8 silly cache add   scope: null,
+8 silly cache add   name: null,
+8 silly cache add   rawSpec: '.',
+8 silly cache add   spec: '/root/wifidog-server',
+8 silly cache add   type: 'directory' }
+9 verbose addLocalDirectory /root/.npm/webconfig/0.0.1/package.tgz not in flight; packing
+10 verbose correctMkdir /root/.npm correctMkdir not in flight; initializing
+11 info lifecycle webconfig@0.0.1~prepublish: webconfig@0.0.1
+12 silly lifecycle webconfig@0.0.1~prepublish: no script for prepublish, continuing
+13 verbose tar pack [ '/root/.npm/webconfig/0.0.1/package.tgz',
+13 verbose tar pack   '/root/wifidog-server' ]
+14 verbose tarball /root/.npm/webconfig/0.0.1/package.tgz
+15 verbose folder /root/wifidog-server
+16 verbose addLocalTarball adding from inside cache /root/.npm/webconfig/0.0.1/package.tgz
+17 verbose correctMkdir /root/.npm correctMkdir not in flight; initializing
+18 silly cache afterAdd webconfig@0.0.1
+19 verbose afterAdd /root/.npm/webconfig/0.0.1/package/package.json not in flight; writing
+20 verbose correctMkdir /root/.npm correctMkdir not in flight; initializing
+21 verbose afterAdd /root/.npm/webconfig/0.0.1/package/package.json written
+22 silly publish { name: 'webconfig',
+22 silly publish   version: '0.0.1',
+22 silly publish   scripts: { start: 'nodejs ./bin/www' },
+22 silly publish   dependencies:
+22 silly publish    { 'body-parser': '~1.13.2',
+22 silly publish      'connman-simplified': '^0.1.3',
+22 silly publish      'cookie-parser': '~1.3.5',
+22 silly publish      ejs: '~2.3.3',
+22 silly publish      express: '~4.13.1',
+22 silly publish      morgan: '~1.6.1',
+22 silly publish      'serve-favicon': '~2.3.0',
+22 silly publish      'socket.io': '^1.4.5',
+22 silly publish      winston: '~2.2.0' },
+22 silly publish   license: '(ISC OR GPL-3.0)',
+22 silly publish   repository:
+22 silly publish    { type: 'git',
+22 silly publish      url: 'git+https://github.com/Pillar1989/wifidog-server.git' },
+22 silly publish   readme: '#Webconfig\r\n##Overview\r\n* usb0: setup by udhcpd\r\n* wlan0: setup by ConnMan\r\n* SoftAp0: setup by dnsmasq\r\n\r\n###wlan0\r\nSetup by ConnMan, because of wifi captive portal need dns server, so we disable ConnMan dns serivce.\r\n>cat /lib/systemd/system/connman.service \r\n\r\n\t[Unit]\r\n\tDescription=Connection service\r\n\tDefaultDependencies=false\r\n\tConflicts=shutdown.target\r\n\tRequiresMountsFor=/var/lib/connman\r\n\tAfter=dbus.service network-pre.target systemd-sysusers.service\r\n\tBefore=network.target multi-user.target shutdown.target\r\n\tWants=network.target\r\n\r\n\t[Service]\r\n\tType=dbus\r\n\tBusName=net.connman\r\n\tRestart=on-failure\r\n\tExecStart=/usr/sbin/connmand -n --nodnsproxy\r\n\tStandardOutput=null\r\n\tCapabilityBoundingSet=CAP_KILL CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW CAP_SYS_TIME CAP_SYS_MODULE\r\n\tProtectHome=true\r\n\tProtectSystem=full\r\n\r\n\t[Install]\r\n\tWantedBy=multi-user.target\r\n###SoftAp0\r\nIn order to set Wifi to Multrole mode, so add SoftAp0  virtual interface.\r\n>cat /usr/bin/wifidog_pre\r\n\r\n\t#!/bin/bash\r\n\tiw phy phy0 interface add SoftAp0 type managed\r\n\tifconfig SoftAp0 up\r\n\tifconfig SoftAp0 192.168.8.1 netmask 255.255.255.0 up\r\n\techo 1 > /proc/sys/net/ipv4/ip_forward\r\n\tiptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE\r\n\tiptables -A FORWARD -i wlan0 -o SoftAp0 -m state --state RELATED,ESTABLISHED -j ACCEPT\r\n\tiptables -A FORWARD -i SoftAp0 -o wlan0 -j ACCEPT\r\n\r\n\twifidog -f -d 7\r\n\r\nStart this script on boot.\r\n>cat /lib/systemd/system/wifidog-gateway.service\r\n\r\n\t[Unit]\r\n\tDescription=wifidog gateway Service\r\n\tAfter=network.target\r\n\r\n\t[Service]\r\n\tType=simple\r\n\tExecStart=/usr/bin/wifidog_pre\r\n\tKillSignal=SIGINT\r\n\tRestart=on-failure\r\n\tRestartSec=5\r\n\r\n\t[Install]\r\n\tWantedBy=multi-user.target\r\nSoftAp0 dhcpd services provided by dnsmasq. wifi captive portal also need dnsmasq provide dns local analysis.\r\n>cat /etc/dnsmasq.d/SoftAp0\r\n\r\n\tinterface=SoftAp0\r\n\tport=53\r\n\tdhcp-authoritative\r\n\tdomain-needed\r\n\tbogus-priv\r\n\texpand-hosts\r\n\tcache-size=2048\r\n\t#domain=lan\r\n\t#server=/lan/\r\n\t#dhcp-range=lan,192.168.8.50,192.168.8.150,12h\r\n\tdhcp-range=192.168.8.50,192.168.8.150,12h\r\n\tlisten-address=127.0.0.1\r\n\tlisten-address=192.168.8.1\r\n\t#server=/beaglebone.lan/\r\n\t#server=/captive.apple.com/\r\n\t#server=/beaglebone.local/\r\n\tdhcp-option-force=option:router,192.168.8.1\r\n\tdhcp-option-force=option:dns-server,192.168.8.1\r\n\tdhcp-option-force=option:mtu,1500\r\n\t#no-hosts \r\n\t#bind-interfaces\r\n\t#no-resolv\r\n\t#address=/beaglebone.lan/192.168.8.1\r\n\t#address=/beaglebone.local/192.168.8.1\r\n\taddress=/#/172.1.8.1\r\n\t#ptr-record=1.8.168.192.in-addr.arpa,beaglebone.lan\r\nSoftAp0 AP mode seted by hostapd(hostapd v2.5-devel), We update it from https://git.ti.com/wilink8-wlan/build-utilites.git. Configure hostapd example:\r\nhttps://github.com/Pillar1989/wifidog-server/blob/BBGW/conf/hostapd.conf\r\n\r\nActually it config in nodejs code.\r\nhttps://github.com/Pillar1989/wifidog-server/blob/BBGW/config.js\r\n\r\nConnman should allow hostapd play SoftAp0. \r\n>cat /etc/connman/main.conf\r\n\r\n\t[General]\r\n\tPreferredTechnologies=ethernet,wifi\r\n\tSingleConnectedTechnology=false\r\n\tAllowHostnameUpdates=false\r\n\tPersistentTetheringMode=true\r\n\tNetworkInterfaceBlacklist=usb0,SoftAp0\r\n\r\n###Wifi captive portal\r\nWe use wifidog(www.wifidog.org) provide wifi captive portal.\r\n>git clone https://github.com/Pillar1989/wifidog-gateway\r\n>./autogen.sh\r\n>configure --prefix=/usr\r\n>make && make install\r\n\r\nConfig it:\r\n>cp wifidog.* /usr/etc/\r\n\r\n\t...\r\n\tGatewayInterface SoftAp0\r\n\t...\r\n\tGatewayAddress 192.168.8.1\r\n\t...\r\n\tAuthServer { \r\n\tHostname 192.168.8.1\r\n\tSSLAvailable no\r\n\tHTTPPort 520\r\n\tPath /\r\n\t}\r\n\t...\r\n\r\n###Wifidog Protocol\r\n\r\n![](https://github.com/Pillar1989/wifidog-server/blob/BBGW/public/image/wifidog-Protocol.png)\r\n\r\n* The client does his initial request, as if he was already connected, (e.g.: http://www.google.ca)\r\n* The Gateway\'s firewall rules mangle the request to redirect it to a local port on the Gateway. When that\'s the done, the Gateway provides an HTTP Redirect reply that contains the Gateway ID, Gateway FQDN and other informations\r\n* The Client does his request to the Auth Server as specified by the Gateway, see Login Protocol\r\n* The Gateway replies with a (potentially custom) splash (login) page\r\n* The Client provides his identification informations (username and password)\r\n* Upon succesful authentication, the client gets an HTTP Redirect to the Gateway\'s own web server with his authentication proof (a one-time token), http://GatewayIP:GatewayPort/wifidog/auth?token=[auth token]\r\n* The Client then connects to the Gateway and thus gives it his token\r\n* The Gateway requests validation of the token from the Auth Server, see Client Protocol\r\n* The Auth Server confirms the token\r\n* The Gateway then sends a redirect to the Client to obtain the Success Page from the Auth Server, redirects to http://auth_server/portal/\r\n* The Auth Server notifies the Client that his request was successful\r\n\r\n\r\n###wifidog server\r\n>git clone https://github.com/Pillar1989/wifidog-server -B BBGW\r\n\r\n>cd wifidog-server\r\n\r\n>npm install\r\n\r\n>npm start\r\n\r\nEnjoy it.\r\n\r\n## License\r\n\r\nThis project is developed by Baozhu Zuo(<zuobaozhu@gmail>) for seeed studio. \r\n\r\nThe code written in this project is licensed under the [GNU GPL v3 License](http://www.gnu.org/licenses/gpl-3.0.en.html). \r\n\r\n',
+22 silly publish   readmeFilename: 'README.md',
+22 silly publish   gitHead: '0151c751bac74443e1e952db6249dd81d38072b6',
+22 silly publish   description: '* usb0: setup by udhcpd\r * wlan0: setup by ConnMan\r * SoftAp0: setup by dnsmasq',
+22 silly publish   bugs: { url: 'https://github.com/Pillar1989/wifidog-server/issues' },
+22 silly publish   homepage: 'https://github.com/Pillar1989/wifidog-server#readme',
+22 silly publish   _id: 'webconfig@0.0.1',
+22 silly publish   _shasum: 'fb3c3a22b6b4f3186b6b93071e50af137ab8e1ce',
+22 silly publish   _from: '.' }
+23 verbose getPublishConfig undefined
+24 silly mapToRegistry name webconfig
+25 silly mapToRegistry using default registry
+26 silly mapToRegistry registry https://registry.npmjs.org/
+27 silly mapToRegistry uri https://registry.npmjs.org/webconfig
+28 verbose publish registryBase https://registry.npmjs.org/
+29 silly publish uploading /root/.npm/webconfig/0.0.1/package.tgz
+30 verbose request uri https://registry.npmjs.org/webconfig
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 3:50:39 AM
+33 verbose request using bearer token for auth
+34 verbose request id e3de415e54410d6b
+35 http request PUT https://registry.npmjs.org/webconfig
+36 http 503 https://registry.npmjs.org/webconfig
+37 verbose bad json <?xml version="1.0" encoding="utf-8"?>
+37 verbose bad json <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+37 verbose bad json  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+37 verbose bad json <html>
+37 verbose bad json   <head>
+37 verbose bad json     <title>503 backend write error</title>
+37 verbose bad json   </head>
+37 verbose bad json   <body>
+37 verbose bad json     <h1>Error 503 backend write error</h1>
+37 verbose bad json     <p>backend write error</p>
+37 verbose bad json     <h3>Guru Mediation:</h3>
+37 verbose bad json     <p>Details: cache-hkg6827-HKG 1461642774 2648104225</p>
+37 verbose bad json     <hr>
+37 verbose bad json     <p>Varnish cache server</p>
+37 verbose bad json   </body>
+37 verbose bad json </html>
+38 error registry error parsing json
+39 verbose headers { server: 'Varnish',
+39 verbose headers   'retry-after': '0',
+39 verbose headers   'content-type': 'text/html; charset=utf-8',
+39 verbose headers   'content-length': '451',
+39 verbose headers   'accept-ranges': 'bytes',
+39 verbose headers   date: 'Tue, 26 Apr 2016 03:52:54 GMT',
+39 verbose headers   via: '1.1 varnish',
+39 verbose headers   connection: 'close',
+39 verbose headers   'x-served-by': 'cache-hkg6827-HKG',
+39 verbose headers   'x-cache': 'MISS',
+39 verbose headers   'x-cache-hits': '0',
+39 verbose headers   'x-timer': 'S1461642646.081567,VS0,VE128888' }
+40 info retry will retry, error on last attempt: SyntaxError: Unexpected token <
+40 info retry
+40 info retry <?xml version="1.0" encoding="utf-8"?>
+40 info retry <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+40 info retry  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+40 info retry <html>
+40 info retry   <head>
+40 info retry     <title>503 backend write error</title>
+40 info retry   </head>
+40 info retry   <body>
+40 info retry     <h1>Error 503 backend write error</h1>
+40 info retry     <p>backend write error</p>
+40 info retry     <h3>Guru Mediation:</h3>
+40 info retry     <p>Details: cache-hkg6827-HKG 1461642774 2648104225</p>
+40 info retry     <hr>
+40 info retry     <p>Varnish cache server</p>
+40 info retry   </body>
+40 info retry </html>
+41 info attempt registry request try #2 at 3:53:05 AM
+42 verbose request using bearer token for auth
+43 http request PUT https://registry.npmjs.org/webconfig
+44 http 503 https://registry.npmjs.org/webconfig
+45 verbose bad json <?xml version="1.0" encoding="utf-8"?>
+45 verbose bad json <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+45 verbose bad json  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+45 verbose bad json <html>
+45 verbose bad json   <head>
+45 verbose bad json     <title>503 backend write error</title>
+45 verbose bad json   </head>
+45 verbose bad json   <body>
+45 verbose bad json     <h1>Error 503 backend write error</h1>
+45 verbose bad json     <p>backend write error</p>
+45 verbose bad json     <h3>Guru Mediation:</h3>
+45 verbose bad json     <p>Details: cache-hkg6822-HKG 1461642918 3222305313</p>
+45 verbose bad json     <hr>
+45 verbose bad json     <p>Varnish cache server</p>
+45 verbose bad json   </body>
+45 verbose bad json </html>
+46 error registry error parsing json
+47 verbose headers { server: 'Varnish',
+47 verbose headers   'retry-after': '0',
+47 verbose headers   'content-type': 'text/html; charset=utf-8',
+47 verbose headers   'content-length': '451',
+47 verbose headers   'accept-ranges': 'bytes',
+47 verbose headers   date: 'Tue, 26 Apr 2016 03:55:18 GMT',
+47 verbose headers   via: '1.1 varnish',
+47 verbose headers   connection: 'close',
+47 verbose headers   'x-served-by': 'cache-hkg6822-HKG',
+47 verbose headers   'x-cache': 'MISS',
+47 verbose headers   'x-cache-hits': '0',
+47 verbose headers   'x-timer': 'S1461642790.721722,VS0,VE127588' }
+48 info retry will retry, error on last attempt: SyntaxError: Unexpected token <
+48 info retry
+48 info retry <?xml version="1.0" encoding="utf-8"?>
+48 info retry <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+48 info retry  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+48 info retry <html>
+48 info retry   <head>
+48 info retry     <title>503 backend write error</title>
+48 info retry   </head>
+48 info retry   <body>
+48 info retry     <h1>Error 503 backend write error</h1>
+48 info retry     <p>backend write error</p>
+48 info retry     <h3>Guru Mediation:</h3>
+48 info retry     <p>Details: cache-hkg6822-HKG 1461642918 3222305313</p>
+48 info retry     <hr>
+48 info retry     <p>Varnish cache server</p>
+48 info retry   </body>
+48 info retry </html>
+49 info attempt registry request try #3 at 3:56:18 AM
+50 verbose request using bearer token for auth
+51 http request PUT https://registry.npmjs.org/webconfig
+52 http 503 https://registry.npmjs.org/webconfig
+53 verbose bad json <?xml version="1.0" encoding="utf-8"?>
+53 verbose bad json <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+53 verbose bad json  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+53 verbose bad json <html>
+53 verbose bad json   <head>
+53 verbose bad json     <title>503 backend write error</title>
+53 verbose bad json   </head>
+53 verbose bad json   <body>
+53 verbose bad json     <h1>Error 503 backend write error</h1>
+53 verbose bad json     <p>backend write error</p>
+53 verbose bad json     <h3>Guru Mediation:</h3>
+53 verbose bad json     <p>Details: cache-hkg6824-HKG 1461643765 2263112637</p>
+53 verbose bad json     <hr>
+53 verbose bad json     <p>Varnish cache server</p>
+53 verbose bad json   </body>
+53 verbose bad json </html>
+54 error registry error parsing json
+55 verbose headers { server: 'Varnish',
+55 verbose headers   'retry-after': '0',
+55 verbose headers   'content-type': 'text/html; charset=utf-8',
+55 verbose headers   'content-length': '451',
+55 verbose headers   'accept-ranges': 'bytes',
+55 verbose headers   date: 'Tue, 26 Apr 2016 04:09:25 GMT',
+55 verbose headers   via: '1.1 varnish',
+55 verbose headers   connection: 'close',
+55 verbose headers   'x-served-by': 'cache-hkg6824-HKG',
+55 verbose headers   'x-cache': 'MISS',
+55 verbose headers   'x-cache-hits': '0',
+55 verbose headers   'x-timer': 'S1461642982.667086,VS0,VE782499' }
+56 verbose request invalidating /root/.npm/registry.npmjs.org/webconfig on PUT
+57 error publish Failed PUT 503
+58 verbose stack SyntaxError: Unexpected token <
+58 verbose stack
+58 verbose stack <?xml version="1.0" encoding="utf-8"?>
+58 verbose stack <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+58 verbose stack  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+58 verbose stack <html>
+58 verbose stack   <head>
+58 verbose stack     <title>503 backend write error</title>
+58 verbose stack   </head>
+58 verbose stack   <body>
+58 verbose stack     <h1>Error 503 backend write error</h1>
+58 verbose stack     <p>backend write error</p>
+58 verbose stack     <h3>Guru Mediation:</h3>
+58 verbose stack     <p>Details: cache-hkg6824-HKG 1461643765 2263112637</p>
+58 verbose stack     <hr>
+58 verbose stack     <p>Varnish cache server</p>
+58 verbose stack   </body>
+58 verbose stack </html>
+58 verbose stack
+58 verbose stack     at Object.parse (native)
+58 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:199:23)
+58 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+58 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:199:22)
+58 verbose stack     at Request.emit (events.js:110:17)
+58 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1036:10)
+58 verbose stack     at Request.emit (events.js:129:20)
+58 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:963:12)
+58 verbose stack     at IncomingMessage.emit (events.js:129:20)
+58 verbose stack     at _stream_readable.js:908:16
+59 verbose cwd /root/wifidog-server
+60 error Linux 4.1.18-ti-r53
+61 error argv "node" "/usr/local/bin/npm" "publish"
+62 error node v0.12.12
+63 error npm  v3.8.0
+64 error Unexpected token <
+64 error
+64 error <?xml version="1.0" encoding="utf-8"?>
+64 error <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+64 error  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+64 error <html>
+64 error   <head>
+64 error     <title>503 backend write error</title>
+64 error   </head>
+64 error   <body>
+64 error     <h1>Error 503 backend write error</h1>
+64 error     <p>backend write error</p>
+64 error     <h3>Guru Mediation:</h3>
+64 error     <p>Details: cache-hkg6824-HKG 1461643765 2263112637</p>
+64 error     <hr>
+64 error     <p>Varnish cache server</p>
+64 error   </body>
+64 error </html>
+65 error If you need help, you may report this error at:
+65 error     <https://github.com/npm/npm/issues>
+66 verbose exit [ 1, true ]

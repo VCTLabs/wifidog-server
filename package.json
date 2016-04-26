@@ -1,13 +1,11 @@
 {
-  "name": "wifidog-server",
-  "version": "0.0.0",
-  "private": true,
+  "name": "webconfig",
+  "version": "0.0.1",
   "scripts": {
     "start": "nodejs ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
-    "bonescript": "^0.5.0-beta3",
     "connman-simplified": "^0.1.3",
     "cookie-parser": "~1.3.5",
     "ejs": "~2.3.3",
@@ -16,5 +14,7 @@
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.4.5",
     "winston": "~2.2.0"
-  }
+  },
+  "license": "(ISC OR GPL-3.0)",
+  "repository": "https://github.com/Pillar1989/wifidog-server"
 }
