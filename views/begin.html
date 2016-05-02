@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple getting starter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <!-- remember, jQuery is completely optional -->
+  <!-- <script type='text/javascript' src='javascripts/jquery-1.12.0.js'></script> -->
+  <script type='text/javascript' src='/javascripts/jquery.particleground.js'></script> 
+  <script type='text/javascript' src='/javascripts/login.js'></script>
+  <script type='text/javascript' src="/javascripts/socket.io-1.4.5.js"></script>
+  <script type='text/javascript' src="/javascripts/begin.js"></script>
+</head>
+
+<body>
+
+<div id="particles">
+  <div id="intro">
+    <h1><font size=20 style="line-height:0.1">BeagleBone</font></h1>
+    <p>Welcome, your board is connected. Please enter your board's password.</p>  
+    <div class="wrap" id='id_wrap'>
+         <p style="display: none;" id="errorAdmin"></p>
+         <!--- say something-->
+         <form class="login"  action="admin?act=admin" name="admin_info" method="post">
+            <input type="password" name="admin" placeholder="Your board password" />
+            <input type="button"  class='btn' size="15"  style="background-color: transparent; border: 0;" onclick="submit_password()" value="Done"/>
+         </form>
+        </div>
+  </div>
+</div>
+
+</body>
+</html>

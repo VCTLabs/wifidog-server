@@ -45,6 +45,7 @@ function init(){
             document.forms["wifi_info"].style.display="";            
         }
     });
+
     iosocket.emit("scanWifi","a");
 }
 function select_click(){
@@ -66,6 +67,8 @@ function check(){
         alert("Please,Enter the ssid password.");
         return false;
     }
+    obj.admin = document.forms["wifi_info"]["admin"].value;
+
     iosocket.emit("configWifi",obj);
     document.forms["wifi_info"].style.display="none";  
     waitimg.style.display="";

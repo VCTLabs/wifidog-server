@@ -5,9 +5,12 @@ config.logger.errorFile = __dirname + '/log/error.log';
 config.logger.consoleFile = __dirname + '/log/console.log';
 config.logger.maxFileSize = 1000000;
 config.logger.maxFiles = 1;
+
+//whether use button to control wifi.
 config.button = {};
 config.button.isUsed = 0;
 config.button.num = 43;
+
 config.hostapd ={
     interface: 'SoftAp0',
     driver: 'nl80211',
@@ -89,5 +92,9 @@ config.hostapd ={
     //rsn_pairwise: 'CCMP TKIP'
 
 };
-// Make the configuration parameters available.
+//Whether get the board access password
+config.admin = {};
+config.admin.flag = 0;
+config.admin.file = "/etc/wificonfig/password";
+config.admin.password = '';
 module.exports = config;
