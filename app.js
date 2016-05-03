@@ -31,6 +31,7 @@ app.use('/ping', ping);
 app.use('/users', users);
 
 // Add bone101 and bonescript
+b.autorun('/var/lib/cloud9/autorun');
 app.get('/bonescript.js', b.socketJSReqHandler);
 app.use('/bone101/static', express.static('/var/lib/cloud9/static')); // to be removed when bone101 is statically moved to /usr/share/bone101
 app.use('/bone101', express.static('/var/lib/cloud9/bone101')); // to be updated when bone101 is moved to /usr/share/bone101
