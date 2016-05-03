@@ -19,7 +19,7 @@ app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 app.disable('etag');
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon('/var/lib/cloud9/favicon.ico')); // move when bone101 moves to /usr/share/bone101
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
