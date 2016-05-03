@@ -11,7 +11,7 @@ var ping = require(__dirname + '/routes/ping');
 
 var app = express();
 var b = require('bonescript');
-var events = require('events');
+app['bonescript'] = b;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,11 +31,12 @@ app.use('/ping', ping);
 app.use('/users', users);
 
 // Add bone101 and bonescript
-var serverEmitter = new events.EventEmitter();
 app.get('/bonescript.js', b.socketJSReqHandler);
 app.use('/bone101/static', express.static('/var/lib/cloud9/static')); // to be removed when bone101 is statically moved to /usr/share/bone101
 app.use('/bone101', express.static('/var/lib/cloud9/bone101')); // to be updated when bone101 is moved to /usr/share/bone101
-b.addSocketListeners(app, serverEmitter);
+// var serverEmitter = new events.EventEmitter();
+// Note: socket.io listners need to be installed with b.addSocketListeners(server, serverEmitter);
+// to be done in bin/www, since socket.io is already used there
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
