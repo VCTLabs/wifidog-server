@@ -4,7 +4,9 @@ var connman = require(__dirname + '/../lib/connman');
 var wifidog = require(__dirname + '/../lib/wifidog');
 var logger = require(__dirname + '/../lib/logger');
 var led = require(__dirname + '/../lib/led');
+var config = require(__dirname+ "/../config");
 var EventEmitter = require('events').EventEmitter; 
+var fs = require('fs');
 var gw_address = '';
 var gw_port = '';
 var ssid;
@@ -28,9 +30,14 @@ router.get('/login', function(req, res, next) {
     res.header("Cache-Control", "no-cache, no-store, must-revalidate");
     res.header("Pragma", "no-cache");
     res.header("Expires", 0);
-
-    // logger.info(req.query);
-    res.render('index', { title: 'WIFI authentication' });
+    fs.readFile(config.admin.file, 'utf8', function (err, data) {
+        if(data != null || data !=""){
+            res.render('begin', { title: 'WIFI authentication' });
+        }
+        else{
+             res.render('index', { title: 'WIFI authentication' });
+        }
+    });  
 });
 /*for web browser test*/
 router.post('/config',function(req,res){
@@ -41,44 +48,6 @@ router.post('/config',function(req,res){
 });
 /*wifidog post ssid and password*/
 router.post('/login/config',function(req,res,next){
-//     logger.info("Form (form querystring):" + req.query.form);
-    //  logger.info(req.body);
-    // ssid = req.body.ssid;
-    // password = req.body.password;
-    //  logger.info(ssid);
-    //  logger.info(password);
-    // errorCode = 4;
-    // event.on("send",function(){
-        // if(errorCode == 1)
-        // {return res.send("ready"); }
-        // else if(errorCode == 2)
-        // {return res.send("failure");}
-        // else if(errorCode == 3)
-         // {return res.send("failure");}
-          
-    // });
-    // if(ssid !=null && password != null){
-        // connman.on('sta',ssid,password,function(status){ 
-            //  logger.info(status+errorCode);
-            // if(errorCode == 4){
-                // if(status == "ready")
-                // {
-                    // errorCode = 1;
-                    // event.emit("send");
-                // }
-                // if(status == "failure")
-                // {
-                    // errorCode = 2;
-                    // event.emit("send");                    
-                // }
-            // }       
-        // });
-    // }else{
-        // if(errorCode == 4){
-            // errorCode = 3;
-            // event.emit("send");
-        // }
-    // }    
 
 });
 /*wifidog post ssid and password*/
@@ -91,11 +60,9 @@ router.post('/last',function(req,res){
      res.render('BB_logo', { title: 'Show logo' }); 
 });
 /*wifidog tell you are ready.*/
-router.post('/login/last',function(req,res){
-   // wifidog.on('off');
-    led.on("ok");
-
-    res.render('BB_logo', { title: 'Show logo' }); 
+router.post('/login/admin',function(req,res){
+    logger.info('admin.......');
+    res.render('index', { title: 'WIFI authentication' });
 });
 router.get('/auth', function(req, res, next) {
     

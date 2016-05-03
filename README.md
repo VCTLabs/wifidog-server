@@ -95,6 +95,16 @@ https://github.com/Pillar1989/wifidog-server/blob/BBGW/conf/hostapd.conf
 Actually it config in nodejs code.
 https://github.com/Pillar1989/wifidog-server/blob/BBGW/config.js
 
+Connman should allow hostapd play SoftAp0. 
+>cat /etc/connman/main.conf
+
+	[General]
+	PreferredTechnologies=ethernet,wifi
+	SingleConnectedTechnology=false
+	AllowHostnameUpdates=false
+	PersistentTetheringMode=true
+	NetworkInterfaceBlacklist=usb0,SoftAp0
+
 ###Wifi captive portal
 We use wifidog(www.wifidog.org) provide wifi captive portal.
 >git clone https://github.com/Pillar1989/wifidog-gateway

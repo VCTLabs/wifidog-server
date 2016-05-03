@@ -11,4 +11,5 @@ log/*
 *.swp
 *.swo
 *~
-
+npm-debug.log
+./log/console.log

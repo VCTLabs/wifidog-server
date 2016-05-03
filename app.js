@@ -10,7 +10,9 @@ var users = require(__dirname + '/routes/users');
 var ping = require(__dirname + '/routes/ping');
 
 var app = express();
+// var b = require('bonescript');
 
+// b.serverStart();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.html', ejs.__express);

@@ -193,6 +193,7 @@ p {
   border-color: #005544;
   text-decoration:underline;
 }
+#ssid option { color:#000;}
 @media only screen and (max-width: 1000px) {
   h1 {
     font-size: 70px;
