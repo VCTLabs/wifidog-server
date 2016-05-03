@@ -10,16 +10,16 @@ var users = require(__dirname + '/routes/users');
 var ping = require(__dirname + '/routes/ping');
 
 var app = express();
-// var b = require('bonescript');
+var b = require('bonescript');
+app['bonescript'] = b;
 
-// b.serverStart();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 app.disable('etag');
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon('/var/lib/cloud9/favicon.ico')); // move when bone101 moves to /usr/share/bone101
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,6 +30,14 @@ app.use('/', routes);
 app.use('/ping', ping);
 app.use('/users', users);
 
+// Add bone101 and bonescript
+b.autorun('/var/lib/cloud9/autorun');
+app.get('/bonescript.js', b.socketJSReqHandler);
+app.use('/bone101/static', express.static('/var/lib/cloud9/static')); // to be removed when bone101 is statically moved to /usr/share/bone101
+app.use('/bone101', express.static('/var/lib/cloud9/bone101')); // to be updated when bone101 is moved to /usr/share/bone101
+// var serverEmitter = new events.EventEmitter();
+// Note: socket.io listners need to be installed with b.addSocketListeners(server, serverEmitter);
+// to be done in bin/www, since socket.io is already used there
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
