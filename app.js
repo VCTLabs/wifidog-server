@@ -10,9 +10,9 @@ var users = require(__dirname + '/routes/users');
 var ping = require(__dirname + '/routes/ping');
 
 var app = express();
-// var b = require('bonescript');
+var b = require('bonescript');
+var events = require('events');
 
-// b.serverStart();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.html', ejs.__express);
@@ -30,6 +30,12 @@ app.use('/', routes);
 app.use('/ping', ping);
 app.use('/users', users);
 
+// Add bone101 and bonescript
+var serverEmitter = new events.EventEmitter();
+app.get('/bonescript.js', b.socketJSReqHandler);
+app.use('/bone101/static', express.static('/var/lib/cloud9/static')); // to be removed when bone101 is statically moved to /usr/share/bone101
+app.use('/bone101', express.static('/var/lib/cloud9/bone101')); // to be updated when bone101 is moved to /usr/share/bone101
+b.addSocketListeners(app, serverEmitter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
