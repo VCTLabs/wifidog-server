@@ -5,7 +5,6 @@ function init(){
     iosocket= io();  
     var errorAdmin = document.getElementById('errorAdmin');
     iosocket.on('adminResult', function(message) {
-        alert(message);
         if(message == "ok"){
             document.forms["admin_info"].submit();
         }
