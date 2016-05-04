@@ -1,8 +1,8 @@
 // Log files
 var config = {}
 config.logger = {};
-config.logger.errorFile = __dirname + '/log/error.log';
-config.logger.consoleFile = __dirname + '/log/console.log';
+config.logger.errorFile = '/var/log/wificonfig_error.log';
+config.logger.consoleFile = '/var/log/wiificonfig_console.log';
 config.logger.maxFileSize = 1000000;
 config.logger.maxFiles = 1;
 
@@ -23,7 +23,6 @@ config.hostapd ={
     logger_syslog_level: 2,
     logger_stdout:  -1,
     logger_stdout_level: 2,
-    dump_file: '/tmp/hostapd.dump',
     ctrl_interface: '/var/run/hostapd',
     ctrl_interface_group:0,
     supported_rates: '60 90 120 180 240 360 480 540',

@@ -15,7 +15,7 @@ var event = new EventEmitter();
 var errorCode;
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send('hello world');
+     res.redirect( 'http://192.168.8.1/bone101/Support/bone101/' );
 });
 /* GET ping . */
 router.get('/ping', function(req, res, next) {
@@ -26,12 +26,12 @@ router.get('/ping', function(req, res, next) {
 router.get('/login', function(req, res, next) {
     gw_address = req.query.gw_address;
     gw_port     = req.query.gw_port;
-    led.on("config");
+    led.on("ok");
     res.header("Cache-Control", "no-cache, no-store, must-revalidate");
     res.header("Pragma", "no-cache");
     res.header("Expires", 0);
     fs.readFile(config.admin.file, 'utf8', function (err, data) {
-        if(data != null || data !=""){
+        if(data !=""){
             res.render('begin', { title: 'WIFI authentication' });
         }
         else{
