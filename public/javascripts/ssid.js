@@ -14,11 +14,20 @@ function init(){
         }
         //selector.options.length = 1; 
         for(var serviceName in message) {
-            var option = document.createElement('option');
-            option.text = message[serviceName].Name +" " + message[serviceName].Strength;
-            option.value = message[serviceName].Name;
-            
-            selector.appendChild(option);
+            var length=selector.options.length;
+            var seen = false;
+            for ( var i=0; i <= length - 1; i++ ) {
+                if (selector.options[i].text.indexOf(message[serviceName].Name) != -1)  {
+                    seen = true;
+                    break;
+                    }
+            }
+            if (!seen) {
+                var option = document.createElement('option');
+                option.text = message[serviceName].Name +" " + message[serviceName].Strength;
+                option.value = message[serviceName].Name;
+                selector.appendChild(option);
+            }
         }
     });
     iosocket.on('lan_info', function(message) {
