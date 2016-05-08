@@ -56,6 +56,11 @@ function init(){
     });
 
     iosocket.emit("scanWifi","a");
+    
+    //never submit this form,
+    document.forms["wifi_info"].onsubmit = function(e) {  
+        return false;
+    }  
 }
 function select_click(){
     

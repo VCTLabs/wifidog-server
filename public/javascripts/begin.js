@@ -14,6 +14,10 @@ function init(){
             errorAdmin.style.color = "red";            
         }        
     });
+    //never submit this form,
+    document.forms["admin_info"].onsubmit = function(e) {  
+        return false;
+    }  
 }
 
 
@@ -24,7 +28,6 @@ function submit_password(){
         alert("Please,Enter the ssid password.");
         return false;
     }
-    
     iosocket.emit("admin",password);
     return true;
 }
