@@ -13,7 +13,7 @@ var gw_port = '';
 var ssid;
 var password;
 var event = new EventEmitter(); 
-var errorCode;
+var node_red_flag = 0;
 /* GET home page. */
 router.get('/', function(req, res, next) {
      res.redirect( 'http://192.168.8.1/bone101/Support/bone101/' );
@@ -32,7 +32,11 @@ router.get('/login', function(req, res, next) {
     res.header("Pragma", "no-cache");
     res.header("Expires", 0);
     //start node-red
-    request('http://127.0.0.1:1880', function (error, response, body) {});
+    //run once 
+    if(node_red_flag == 0){
+        node_red_flag = 1;
+        request('http://127.0.0.1:1880', function (error, response, body) {});
+    }
     fs.readFile(config.admin.file, 'utf8', function (err, data) {
         if(data !=""){
             res.render('begin', { title: 'WIFI authentication' });
