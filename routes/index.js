@@ -1,4 +1,5 @@
 var express = require('express');
+var request = require('request');
 var router = express.Router();
 var connman = require(__dirname + '/../lib/connman');
 var wifidog = require(__dirname + '/../lib/wifidog');
@@ -30,6 +31,8 @@ router.get('/login', function(req, res, next) {
     res.header("Cache-Control", "no-cache, no-store, must-revalidate");
     res.header("Pragma", "no-cache");
     res.header("Expires", 0);
+    //start node-red
+    request('http://127.0.0.1:1880', function (error, response, body) {});
     fs.readFile(config.admin.file, 'utf8', function (err, data) {
         if(data !=""){
             res.render('begin', { title: 'WIFI authentication' });
