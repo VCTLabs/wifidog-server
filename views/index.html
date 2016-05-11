@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-  <meta charset="UTF-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi">
   <title>WIFI authentication</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/stylesheets/style.css" />
   <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
   <!-- remember, jQuery is completely optional -->
@@ -25,7 +26,17 @@
             <form  style="display: none;" action="done?act=done" name="done" method="post">
                 <input type='submit'  class='btn' size="15"  style="background-color: transparent; border: 0;" name="submit" value="Done"/>
             </form>
+            <!--
             <img style="display: none;" src=/image/wait.gif alt="wait" id = "wait" />
+            -->
+            <div class="pageloader" id="wait" style="display: none;">
+                <div class="zozo-loader">
+                    <div class="zozo-loader-inner ball-clip-rotate">
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="login">
             <form class="login" style="display: ;" action="config?act=config"  name="wifi_info" method="post">
                 <select id='ssid' name="ssid" onclick='select_click()'>
