@@ -60,7 +60,7 @@ router.post('/login/config',function(req,res,next){
 /*wifidog post ssid and password*/
 router.post('/login/done',function(req,res){
      wifidog.on('off');
-     res.redirect( 'http://192.168.8.1/bone101/Support/bone101/' );
+     res.redirect( '/bone101/Support/bone101/' );
 });
 
 /*for web browser test*/
