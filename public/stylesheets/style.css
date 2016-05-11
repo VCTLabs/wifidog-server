@@ -69,11 +69,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+
+
 #particles {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
+
 
 #intro {
   position: absolute;
@@ -235,3 +238,87 @@ p {
     height: 4px;
   }
 }
+
+
+/* ================================================================
+ * PAGE LOADER
+ * ================================================================ */
+.pageloader {
+    background: transparent;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
+}
+.pageloader .zozo-loader .zozo-loader-inner {
+    position:absolute;
+    left:0;
+    right:0;
+    top:75%;
+    transform:translateY(-50%);
+    -ms-transform:translateY(-50%);
+    -moz-transform:translateY(-50%);
+    -o-transform:translateY(-50%);
+    -webkit-transform:translateY(-50%);
+    margin:0 auto;
+    width: 40px;
+}
+.pageloader .ball-clip-rotate > div {
+    background-color: transparent;
+    border-radius: 100%;
+    margin: 0 auto;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    border: 3px solid #fff;
+    border-bottom-color: #fff;
+    height: 40px;
+    width: 40px;
+    background: transparent !important;
+    display: inline-block;
+    -webkit-animation: rotate 0.75s 0s linear infinite;
+    animation: rotate 0.75s 0s linear infinite; }
+
+@keyframes rotate {
+    0% {
+        -webkit-transform: rotate(0deg) scale(1);
+        transform: rotate(0deg) scale(1); }
+
+    50% {
+        -webkit-transform: rotate(180deg) scale(0.6);
+        transform: rotate(180deg) scale(0.6); }
+
+    100% {
+        -webkit-transform: rotate(360deg) scale(1);
+        transform: rotate(360deg) scale(1); } }
+
+@-webkit-keyframes rotate {
+    0% {
+        -webkit-transform: rotate(0deg) scale(1);
+        transform: rotate(0deg) scale(1); }
+
+    50% {
+        -webkit-transform: rotate(180deg) scale(0.6);
+        transform: rotate(180deg) scale(0.6); }
+
+    100% {
+        -webkit-transform: rotate(360deg) scale(1);
+        transform: rotate(360deg) scale(1); } }
+
+@keyframes scale {
+    30% {
+        -webkit-transform: scale(0.3);
+        transform: scale(0.3); }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1); } }
+
+@-webkit-keyframes scale {
+    30% {
+        -webkit-transform: scale(0.3);
+        transform: scale(0.3); }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1); } }
