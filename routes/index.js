@@ -16,7 +16,7 @@ var event = new EventEmitter();
 var node_red_flag = 0;
 /* GET home page. */
 router.get('/', function(req, res, next) {
-     res.redirect( 'http://192.168.8.1/bone101/Support/bone101/' );
+     res.redirect( '/bone101/Support/bone101/' );
 });
 /* GET ping . */
 router.get('/ping', function(req, res, next) {
