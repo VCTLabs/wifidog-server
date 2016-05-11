@@ -5,7 +5,6 @@ function init(){
     iosocket= io();  
     var errorAdmin = document.getElementById('errorAdmin');
     iosocket.on('adminResult', function(message) {
-        alert(message);
         if(message == "ok"){
             document.forms["admin_info"].submit();
         }
@@ -15,6 +14,10 @@ function init(){
             errorAdmin.style.color = "red";            
         }        
     });
+    //never submit this form,
+    document.forms["admin_info"].onsubmit = function(e) {  
+        return false;
+    }  
 }
 
 
@@ -25,7 +28,6 @@ function submit_password(){
         alert("Please,Enter the ssid password.");
         return false;
     }
-    
     iosocket.emit("admin",password);
     return true;
 }

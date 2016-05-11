@@ -1,4 +1,5 @@
 var express = require('express');
+var request = require('request');
 var router = express.Router();
 var connman = require(__dirname + '/../lib/connman');
 var wifidog = require(__dirname + '/../lib/wifidog');
@@ -12,10 +13,10 @@ var gw_port = '';
 var ssid;
 var password;
 var event = new EventEmitter(); 
-var errorCode;
+var node_red_flag = 0;
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send('hello world');
+     res.redirect( 'http://192.168.8.1/bone101/Support/bone101/' );
 });
 /* GET ping . */
 router.get('/ping', function(req, res, next) {
@@ -26,12 +27,18 @@ router.get('/ping', function(req, res, next) {
 router.get('/login', function(req, res, next) {
     gw_address = req.query.gw_address;
     gw_port     = req.query.gw_port;
-    led.on("config");
+    led.on("ok");
     res.header("Cache-Control", "no-cache, no-store, must-revalidate");
     res.header("Pragma", "no-cache");
     res.header("Expires", 0);
+    //start node-red
+    //run once 
+    if(node_red_flag == 0){
+        node_red_flag = 1;
+        request('http://127.0.0.1:1880', function (error, response, body) {});
+    }
     fs.readFile(config.admin.file, 'utf8', function (err, data) {
-        if(data != null || data !=""){
+        if(data !=""){
             res.render('begin', { title: 'WIFI authentication' });
         }
         else{
@@ -52,8 +59,10 @@ router.post('/login/config',function(req,res,next){
 });
 /*wifidog post ssid and password*/
 router.post('/login/done',function(req,res){
+     wifidog.on('off');
      res.redirect( 'http://192.168.8.1/bone101/Support/bone101/' );
 });
+
 /*for web browser test*/
 router.post('/last',function(req,res){
       logger.info('last.......');

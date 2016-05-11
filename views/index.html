@@ -19,8 +19,7 @@
 <div id="particles">
   <div id="intro">
     <h1><font size=20 style="line-height:0.1">BeagleBone</font></h1>
-    <p>Welcome, your board is connected. Please configure the board's Wi-Fi.</p>   
-    <p>AP Gateway: 192.168.8.1</p>      
+    <p>Welcome, your board is ready to connect. Please configure the board's Wi-Fi.</p>   
         <div class="wrap" id='id_wrap'>
             <p style="display: none;" id="lanInfo"></p>
             <form  style="display: none;" action="done?act=done" name="done" method="post">
@@ -33,7 +32,7 @@
                 <option value="note">click to select ssid</option>
                 </select>
                 <input type="password" name="password" placeholder="Password" />
-                <input type="text" name="admin" placeholder="Your board password" />
+                <input type="hidden" name="admin" placeholder="Your board password" /> 
                 <input type="button"  class='btn' size="15"  style="background-color: transparent; border: 0;" onclick="check()" value="OK"/>
            </form> 
         </div>
