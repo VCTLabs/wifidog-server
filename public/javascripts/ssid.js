@@ -1,5 +1,6 @@
 window.onload = init;
-var iosocket;  
+var iosocket; 
+var oldssid; 
 function init(){ 
   /***/  
     iosocket= io();  
@@ -32,6 +33,7 @@ function init(){
     });
     iosocket.on('lan_info', function(message) {
         if(message !=null ){
+            oldssid = message.Name;
             lanInfo.innerHTML = "SSID: "+message.Name + "&nbsp; &nbsp; &nbsp; &nbsp;"+"IP : "+message.IPv4.Address;
             lanInfo.style.display="";
             lanInfo.style.color = "#FFFFFF"; 
@@ -79,6 +81,10 @@ function check(){
     if(obj.password == null || obj.password == "")
     {
         alert("Please,Enter the ssid password.");
+        return false;
+    }
+    if(obj.ssid == oldssid){
+        alert("Sorry, connected!.");
         return false;
     }
     obj.admin = document.forms["wifi_info"]["admin"].value;
