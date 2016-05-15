@@ -18,23 +18,23 @@ function init(){
             var length=selector.options.length;
             var seen = false;
             for ( var i=0; i <= length - 1; i++ ) {
-                if (selector.options[i].text.indexOf(message[serviceName].Name) != -1)  {
+                if (selector.options[i].text.indexOf(message[serviceName].ssid) != -1)  {
                     seen = true;
                     break;
                     }
             }
             if (!seen) {
                 var option = document.createElement('option');
-                option.text = message[serviceName].Name +" " + message[serviceName].Strength;
-                option.value = message[serviceName].Name;
+                option.text = message[serviceName].ssid +" " + message[serviceName].strength;
+                option.value = message[serviceName].ssid;
                 selector.appendChild(option);
             }
         }
     });
     iosocket.on('lan_info', function(message) {
         if(message !=null ){
-            oldssid = message.Name;
-            lanInfo.innerHTML = "SSID: "+message.Name + "&nbsp; &nbsp; &nbsp; &nbsp;"+"IP : "+message.IPv4.Address;
+            oldssid = message.ssid;
+            lanInfo.innerHTML = "SSID: "+message.ssid + "&nbsp; &nbsp; &nbsp; &nbsp;"+"IP : "+message.ip4Address;
             lanInfo.style.display="";
             lanInfo.style.color = "#FFFFFF"; 
             document.forms["done"].style.display="";
@@ -49,7 +49,7 @@ function init(){
         }
         if(message == "failure")
         {
-            lanInfo.innerHTML = "OOPS, Maybe there is something wrong with the net work.You should try again!";
+            lanInfo.innerHTML = "OOPS, Maybe there is something wrong with the network.You should try again!";
             lanInfo.style.display="";
             lanInfo.style.color = "red"; 
             document.forms["done"].style.display="none";
@@ -84,7 +84,7 @@ function check(){
         return false;
     }
     if(obj.ssid == oldssid){
-        alert("Sorry, connected!.");
+        alert("Sorry, connected!");
         return false;
     }
     obj.admin = document.forms["wifi_info"]["admin"].value;
