@@ -1,8 +1,8 @@
 {
   "name": "wificonfig",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "scripts": {
-    "start": "nodejs ./bin/www"
+    "start": "NODE_ENV=production nodejs ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
+//var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
@@ -20,7 +20,7 @@ app.set('view engine', 'html');
 app.disable('etag');
 // uncomment after placing your favicon in /public
 app.use(favicon('/var/lib/cloud9/favicon.ico')); // move when bone101 moves to /usr/share/bone101
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -59,7 +59,10 @@ if (app.get('env') === 'development') {
     });
   });
 }
-
+if (app.get('env') != 'production') {
+   var logger = require('morgan'); 
+   app.use(logger('dev'));
+}
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
