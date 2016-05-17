@@ -1,6 +1,6 @@
 {
   "name": "wificonfig",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "scripts": {
     "start": "NODE_ENV=production nodejs ./bin/www"
   },
