@@ -19,7 +19,7 @@ app.engine('.html', ejs.__express);
 app.set('view engine', 'html');
 app.disable('etag');
 // uncomment after placing your favicon in /public
-app.use(favicon('/var/lib/cloud9/favicon.ico')); // move when bone101 moves to /usr/share/bone101
+app.use(favicon('/usr/share/bone101/favicon.ico'));
 //app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,8 +33,8 @@ app.use('/users', users);
 // Add bone101 and bonescript
 b.autorun('/var/lib/cloud9/autorun');
 app.get('/bonescript.js', b.socketJSReqHandler);
-app.use('/bone101/static', express.static('/var/lib/cloud9/static')); // to be removed when bone101 is statically moved to /usr/share/bone101
-app.use('/bone101', express.static('/var/lib/cloud9/bone101')); // to be updated when bone101 is moved to /usr/share/bone101
+app.use('/bone101/static', express.static('/usr/share/bone101/static'));
+app.use('/bone101', express.static('/usr/share/bone101'));
 // var serverEmitter = new events.EventEmitter();
 // Note: socket.io listners need to be installed with b.addSocketListeners(server, serverEmitter);
 // to be done in bin/www, since socket.io is already used there
